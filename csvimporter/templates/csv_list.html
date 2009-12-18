@@ -1,0 +1,15 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<div id="content-main">
+    <h2>CSV Uploads</h2>
+    <ul>
+        {% for csv in csv_list %}
+            <li><a href='{{ csv.id }}'>{{ csv.filename }}, {{ csv.created|time }}({{ csv.created|timesince }} ago)</a></li>
+        {% endfor %}
+    </ul>
+    <a href="new">Start a new import</a>
+</div>
+
+{% endblock %}

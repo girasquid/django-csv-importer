@@ -6,6 +6,7 @@ from django.core.files.base import ContentFile
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list, object_detail
 
 from csvimporter.models import CSV
@@ -23,7 +24,7 @@ def associate(request, object_id):
         if form.is_valid():
             form.save(request)
             request.user.message_set.create(message='CSV imported.')
-            return HttpResponseRedirect('/upload-csv/')
+            return HttpResponseRedirect(reverse('csv-list'))
     else:
         form = CSVAssociateForm(instance)
     return object_detail(request,
@@ -42,7 +43,7 @@ def new(request):
         if form.is_valid():
             instance = form.save()
             request.user.message_set.create(message='Uploaded CSV. Please associate fields below.')
-            return HttpResponseRedirect('/upload-csv/%s/' % instance.id)
+            return HttpResponseRedirect(reverse('associate-csv',args=[instance.id]))
     else:
         form = CSVForm()
     return render_to_response('new.html',

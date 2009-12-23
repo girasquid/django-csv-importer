@@ -41,7 +41,6 @@ class CSVAssociateForm(forms.Form):
         transforms = getattr(settings, 'CSVIMPORTER_DATA_TRANSFORMS', {})
         for row in self.reader:
             data = {}
-            print self.reader.fieldnames
             for field_name in self.reader.fieldnames:
                 data[self.cleaned_data[field_name]] = row[field_name]
             transform_key = '%s.%s' % (self.instance.content_type.app_label, self.instance.content_type.model)

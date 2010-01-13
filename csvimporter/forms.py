@@ -24,6 +24,8 @@ key_to_field_map = getattr(settings, 'CSVIMPORTER_KEY_TO_FIELD_MAP', lambda k: k
 class CSVAssociateForm(forms.Form):
     def __init__(self, instance, *args, **kwargs):
         self.instance = instance
+        # BUGFIX: this removes trailing spaces in fieldnames.
+        instance.csv_file.file[0] = re.sub('\s+,', ',', instance.csv_file.file[0])
         self.reader = csv.DictReader(instance.csv_file)
         self.reader.next()
         self.klass = self.instance.content_type.model_class()

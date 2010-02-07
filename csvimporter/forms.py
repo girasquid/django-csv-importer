@@ -1,4 +1,4 @@
-import csv
+import csv, re
 
 from django import forms
 from django.contrib.contenttypes.models import ContentType
